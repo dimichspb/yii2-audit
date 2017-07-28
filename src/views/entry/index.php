@@ -23,6 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\ActionColumn', 'template' => '{view}'],
             'id',
+            'application',
             [
                 'attribute' => 'user_id',
                 'label' => Yii::t('audit', 'User'),

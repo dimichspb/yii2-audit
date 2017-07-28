@@ -22,6 +22,7 @@ use yii\db\Expression;
  * @property int               $memory_max
  * @property string            $request_method
  * @property string            $ajax
+ * @property string            $application
  *
  * @property AuditError[]      $linkedErrors
  * @property AuditJavascript[] $javascripts
@@ -159,6 +160,7 @@ class AuditEntry extends ActiveRecord
             $this->ip             = $request->userIP;
             $this->ajax           = $request->isAjax;
             $this->request_method = $request->method;
+            $this->application    = $app->name;
         } else if ($request instanceof \yii\console\Request) {
             $this->request_method = 'CLI';
         }
@@ -196,6 +198,7 @@ class AuditEntry extends ActiveRecord
             'user_id'        => Yii::t('audit', 'User'),
             'memory_max'     => Yii::t('audit', 'Memory'),
             'request_method' => Yii::t('audit', 'Request Method'),
+            'application'    => Yii::t('audit', 'Application name'),
         ];
     }
 
