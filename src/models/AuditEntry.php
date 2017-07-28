@@ -163,6 +163,7 @@ class AuditEntry extends ActiveRecord
             $this->application    = $app->name;
         } else if ($request instanceof \yii\console\Request) {
             $this->request_method = 'CLI';
+            $this->application    = $app->name;
         }
 
         $this->save(false);
