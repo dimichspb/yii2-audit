@@ -5,7 +5,7 @@ use bedezign\yii2\audit\models\AuditApplication;
 use bedezign\yii2\audit\models\AuditEntry;
 use yii\db\Schema;
 
-class m170731_000003_alter_audit_entry extends Migration
+class m170731_000005_alter_audit_entry extends Migration
 {
     const TABLE = '{{%audit_entry}}';
 
