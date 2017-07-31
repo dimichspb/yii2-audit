@@ -18,7 +18,7 @@ class m170731_000003_alter_audit_entry extends Migration
         $entries = AuditEntry::find()->all();
 
         foreach ($entries as $entry) {
-            if (!$application = AuditApplication::findOne(['unique_id' => $entry->application_uniqie_id])) {
+            if (!$application = AuditApplication::findOne(['unique_id' => $entry->application_unique_id])) {
                 /** @var AuditApplication $application */
                 $application = new AuditApplication([
                     'unique_id' => $entry->application_unique_id,
