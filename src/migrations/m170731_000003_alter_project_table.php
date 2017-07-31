@@ -14,6 +14,6 @@ class m170731_000003_alter_project_table extends Migration
 
     public function safeDown()
     {
-        $this->alterColumn(self::TABLE, 'author_id', $this->integer()->notNull());
+        $this->alterColumn(self::TABLE, 'author_id', $this->integer());
     }
 }

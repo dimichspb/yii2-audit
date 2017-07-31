@@ -103,6 +103,7 @@ class AuditApplication extends ActiveRecord
         if (!$application = self::findByUniqueId($unique_id)) {
             $application = new AuditApplication([
                 'unique_id' => $unique_id,
+                'name' => $unique_id,
             ]);
             $application->save();
         }

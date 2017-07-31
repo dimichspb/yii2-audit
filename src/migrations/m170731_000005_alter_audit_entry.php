@@ -58,10 +58,11 @@ class m170731_000005_alter_audit_entry extends Migration
         $entries = AuditEntry::find()->all();
 
         foreach ($entries as $entry) {
-            /** @var AuditApplication $application */
-            $application = AuditApplication::findOne(['id' => $entry->application_id]);
-            $entry->application_unique_id = $application->unique_id;
-            $entry->save(false);
+            if ($application = AuditApplication::findOne(['id' => $entry->application_id])) {
+                /** @var AuditApplication $application */
+                $entry->application_unique_id = $application->unique_id;
+                $entry->save(false);
+            }
         }
 
         $this->dropColumn(self::TABLE, 'application_id');
