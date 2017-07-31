@@ -34,6 +34,7 @@ class m170731_000005_alter_audit_entry extends Migration
                 $application = new AuditApplication([
                     'unique_id' => $entry->application_unique_id,
                     'project_id' => $defaultProject->id,
+                    'name' => $entry->application_unique_id,
                 ]);
                 $application->save(false);
             }
