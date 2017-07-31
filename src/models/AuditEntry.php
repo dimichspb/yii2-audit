@@ -159,16 +159,18 @@ class AuditEntry extends ActiveRecord
         $app = Yii::$app;
         $request = $app->request;
 
+        $application = AuditApplication::findOrCreateByUniqueId($app->id);
+        
         $this->route = $app->requestedAction ? $app->requestedAction->uniqueId : null;
         if ($request instanceof \yii\web\Request) {
             $this->user_id        = Audit::getInstance()->getUserId();
             $this->ip             = $request->userIP;
             $this->ajax           = $request->isAjax;
             $this->request_method = $request->method;
-            $this->application_id = $app->id;
+            $this->application_id = $application->id;
         } else if ($request instanceof \yii\console\Request) {
             $this->request_method = 'CLI';
-            $this->application_id = $app->id;
+            $this->application_id = $application->id;
         }
 
         $this->save(false);

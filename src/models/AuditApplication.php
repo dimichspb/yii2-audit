@@ -67,6 +67,30 @@ class AuditApplication extends ActiveRecord
     }
 
     /**
+     * @param $unique_id
+     * @return AuditApplication
+     */
+    public static function findByUniqueId($unique_id)
+    {
+        return self::findOne(['unique_id' => $unique_id]);
+    }
+
+    /**
+     * @param $unique_id
+     * @return AuditApplication
+     */
+    public static function findOrCreateByUniqueId($unique_id)
+    {
+        if (!$application = self::findByUniqueId($unique_id)) {
+            $application = new AuditApplication([
+                'unique_id' => $unique_id,
+            ]);
+            $application->save();
+        }
+        return $application;
+    }
+
+    /**
      * @return bool
      */
     public function hasRelatedData()
