@@ -17,14 +17,6 @@ class m170731_000005_alter_audit_entry extends Migration
 
         /** @var AuditEntry[] $entries */
         $entries = AuditEntry::find()->all();
-
-        if (!$defaultProject = AuditProject::find()->one()) {
-            $defaultProject = new AuditProject([
-                'name' => 'Default Project',
-            ]);
-            $defaultProject->save();
-        }
-
         foreach ($entries as $entry) {
             if (is_null($entry->application_unique_id)) {
                 $entry->application_unique_id = Yii::$app->id;
@@ -33,13 +25,12 @@ class m170731_000005_alter_audit_entry extends Migration
                 /** @var AuditApplication $application */
                 $application = new AuditApplication([
                     'unique_id' => $entry->application_unique_id,
-                    'project_id' => $defaultProject->id,
                     'name' => $entry->application_unique_id,
                 ]);
-                $application->save(false);
+                $application->save();
             }
             $entry->application_id = $application->id;
-            $entry->save(false);
+            $entry->save();
         }
         $this->alterColumn(self::TABLE, 'application_id', $this->integer());
 
@@ -61,7 +52,7 @@ class m170731_000005_alter_audit_entry extends Migration
             if ($application = AuditApplication::findOne(['id' => $entry->application_id])) {
                 /** @var AuditApplication $application */
                 $entry->application_unique_id = $application->unique_id;
-                $entry->save(false);
+                $entry->save();
             }
         }
 

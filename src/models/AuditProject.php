@@ -31,8 +31,8 @@ use yii\web\User;
  */
 class AuditProject extends ActiveRecord
 {
-    const STATUS_DELETED = 0;
-    const STATUS_ACTIVE = 10;
+    const STATUS_ACTIVE = 0;
+    const STATUS_DELETED = 10;
 
     /**
      * @var bool
@@ -45,6 +45,15 @@ class AuditProject extends ActiveRecord
     public static function tableName()
     {
         return '{{%audit_project}}';
+    }
+
+    public function rules()
+    {
+        return [
+            [['id', 'author_id', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['status'], 'default', 'value' => self::STATUS_ACTIVE],
+            [['name', 'description',], 'string'],
+        ];
     }
 
     public function behaviors()
@@ -92,5 +101,16 @@ class AuditProject extends ActiveRecord
     public function getApplications()
     {
         return $this->hasMany(AuditApplication::class, ['project_id' => 'id']);
+    }
+
+    public static function findFirstOrCreate()
+    {
+        if (!$project = self::find()->one()) {
+            $project = new AuditProject([
+                'name' => 'Default Project',
+            ]);
+            $project->save();
+        }
+        return $project;
     }
 }

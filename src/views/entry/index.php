@@ -1,6 +1,9 @@
 <?php
 
 use bedezign\yii2\audit\Audit;
+use bedezign\yii2\audit\models\AuditApplication;
+use bedezign\yii2\audit\models\AuditEntry;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -8,6 +11,7 @@ use bedezign\yii2\audit\models\AuditEntrySearch;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $searchModel AuditEntrySearch */
 
 $this->title = Yii::t('audit', 'Entries');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('audit', 'Audit'), 'url' => ['default/index']];
@@ -23,7 +27,15 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\ActionColumn', 'template' => '{view}'],
             'id',
-            'application_id',
+            [
+                'attribute' => 'application_id',
+                'label' => Yii::t('audit', 'Application'),
+                'class' => 'yii\grid\DataColumn',
+                'filter' => ArrayHelper::map(AuditApplication::find()->all(), 'id', 'name'),
+                'value' => function (AuditEntry $model) {
+                    return $model->application->name;
+                },
+            ],
             [
                 'attribute' => 'user_id',
                 'label' => Yii::t('audit', 'User'),

@@ -35,8 +35,8 @@ use yii\web\User;
  */
 class AuditApplication extends ActiveRecord
 {
-    const STATUS_DELETED = 0;
-    const STATUS_ACTIVE = 10;
+    const STATUS_ACTIVE = 0;
+    const STATUS_DELETED = 10;
 
     /**
      * @var bool
@@ -49,6 +49,17 @@ class AuditApplication extends ActiveRecord
     public static function tableName()
     {
         return '{{%audit_application}}';
+    }
+
+    public function rules()
+    {
+        return [
+            [['id', 'author_id', 'project_id', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['status'], 'default', 'value' => self::STATUS_ACTIVE],
+            [['token'], 'default', 'value' => Yii::$app->security->generateRandomString() . '_' . time()],
+            [['project_id'], 'default', 'value' => (AuditProject::findFirstOrCreate())->id],
+            [['name', 'description', 'unique_id',], 'string'],
+        ];
     }
 
     public function behaviors()
@@ -107,6 +118,8 @@ class AuditApplication extends ActiveRecord
             ]);
             $application->save();
         }
+        $application->save();
+
         return $application;
     }
 
@@ -129,12 +142,5 @@ class AuditApplication extends ActiveRecord
     public function getProject()
     {
         return $this->hasOne(AuditProject::className(), ['id' => 'project_id']);
-    }
-
-    public function beforeSave($insert)
-    {
-        if (is_null($this->token)) {
-            $this->token = Yii::$app->security->generateRandomString() . '_' . time();
-        }
     }
 }
