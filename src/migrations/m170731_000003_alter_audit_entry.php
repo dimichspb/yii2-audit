@@ -12,7 +12,7 @@ class m170731_000003_alter_audit_entry extends Migration
     public function safeUp()
     {
         $this->renameColumn(self::TABLE, 'application_id', 'application_unique_id');
-        $this->addColumn(self::TABLE, 'application_id', $this->integer()->notNull());
+        $this->addColumn(self::TABLE, 'application_id', $this->integer());
 
         /** @var AuditEntry[] $entries */
         $entries = AuditEntry::find()->all();
@@ -28,6 +28,8 @@ class m170731_000003_alter_audit_entry extends Migration
             $entry->application_id = $application->id;
             $entry->save(false);
         }
+        $this->alterColumn(self::TABLE, 'application_id', $this->integer()->notNull());
+
         $this->dropColumn(self::TABLE, 'application_unique_id');
 
         $this->addForeignKey('fk_entry_application_id_application_id', self::TABLE, 'application_id', 'audit_application', 'id', 'CASCADE', 'CASCADE');
