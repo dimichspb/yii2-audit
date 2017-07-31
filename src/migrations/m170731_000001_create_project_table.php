@@ -3,7 +3,7 @@
 use bedezign\yii2\audit\components\Migration;
 use yii\db\Schema;
 
-class m170731_000002_create_application_table extends Migration
+class m170731_000001_create_project_table extends Migration
 {
     const TABLE = '{{%audit_project}}';
 
