@@ -31,6 +31,9 @@ use yii\web\User;
  */
 class AuditProject extends ActiveRecord
 {
+    const STATUS_DELETED = 0;
+    const STATUS_ACTIVE = 10;
+
     /**
      * @var bool
      */
@@ -88,6 +91,6 @@ class AuditProject extends ActiveRecord
 
     public function getApplications()
     {
-        return $this->hasMany(AuditApplcation::class, ['project_id' => 'id']);
+        return $this->hasMany(AuditApplication::class, ['project_id' => 'id']);
     }
 }
