@@ -8,6 +8,7 @@ namespace bedezign\yii2\audit\components\db;
 
 use bedezign\yii2\audit\Audit;
 use bedezign\yii2\audit\components\Helper;
+use Yii;
 
 /**
  * ActiveRecord
@@ -28,7 +29,7 @@ class ActiveRecord extends \yii\db\ActiveRecord
      */
     public static function getDb()
     {
-        return Audit::getInstance()->getDb();
+        return Audit::getInstance()? Audit::getInstance()->getDb(): Yii::$app->db;
     }
 
     /**
