@@ -160,7 +160,7 @@ class AuditEntry extends ActiveRecord
         $request = $app->request;
 
         $application = AuditApplication::findOrCreateByUniqueId($app->id);
-        
+
         $this->route = $app->requestedAction ? $app->requestedAction->uniqueId : null;
         if ($request instanceof \yii\web\Request) {
             $this->user_id        = Audit::getInstance()->getUserId();

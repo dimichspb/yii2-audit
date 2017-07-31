@@ -7,6 +7,8 @@ use bedezign\yii2\audit\components\db\ActiveRecord;
 use bedezign\yii2\audit\components\Helper;
 use Yii;
 use yii\base\Model;
+use yii\behaviors\BlameableBehavior;
+use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\Expression;
 use yii\web\User;
@@ -40,6 +42,20 @@ class AuditProject extends ActiveRecord
     public static function tableName()
     {
         return '{{%audit_project}}';
+    }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => BlameableBehavior::className(),
+                'createdByAttribute' => 'author_id',
+                'updatedByAttribute' => false,
+            ],
+            [
+                'class' => TimestampBehavior::className(),
+            ],
+        ];
     }
 
     /**
