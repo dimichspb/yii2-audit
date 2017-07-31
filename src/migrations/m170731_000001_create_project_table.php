@@ -11,7 +11,7 @@ class m170731_000001_create_project_table extends Migration
     {
         $this->createTable(self::TABLE, [
             'id' => $this->primaryKey(),
-            'author_id' => $this->integer()->notNull(),
+            'author_id' => $this->integer(),
             'name' => $this->string()->notNull(),
             'description' => $this->string(),
             'status' => $this->integer()->notNull()->defaultValue(0),

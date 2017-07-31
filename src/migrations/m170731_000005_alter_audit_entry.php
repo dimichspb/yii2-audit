@@ -41,7 +41,7 @@ class m170731_000005_alter_audit_entry extends Migration
             $entry->application_id = $application->id;
             $entry->save(false);
         }
-        $this->alterColumn(self::TABLE, 'application_id', $this->integer()->notNull());
+        $this->alterColumn(self::TABLE, 'application_id', $this->integer());
 
         $this->dropColumn(self::TABLE, 'application_unique_id');
 
@@ -52,7 +52,7 @@ class m170731_000005_alter_audit_entry extends Migration
     public function safeDown()
     {
         $this->dropForeignKey('fk_entry_application_id_application_id', self::TABLE);
-        $this->addColumn(self::TABLE, 'application_unique_id', $this->string()->notNull());
+        $this->addColumn(self::TABLE, 'application_unique_id', $this->string());
 
         /** @var AuditEntry[] $entries */
         $entries = AuditEntry::find()->all();

@@ -12,7 +12,7 @@ class m170731_000002_create_application_table extends Migration
         $this->createTable(self::TABLE, [
             'id' => $this->primaryKey(),
             'unique_id' => $this->string(64)->unique()->notNull(),
-            'author_id' => $this->integer()->notNull(),
+            'author_id' => $this->integer(),
             'project_id' => $this->integer()->notNull(),
             'name' => $this->string()->notNull(),
             'description' => $this->string(),
