@@ -3,6 +3,7 @@
 use bedezign\yii2\audit\components\Migration;
 use bedezign\yii2\audit\models\AuditApplication;
 use bedezign\yii2\audit\models\AuditEntry;
+use bedezign\yii2\audit\models\AuditProject;
 use yii\db\Schema;
 
 class m170731_000005_alter_audit_entry extends Migration
@@ -17,6 +18,13 @@ class m170731_000005_alter_audit_entry extends Migration
         /** @var AuditEntry[] $entries */
         $entries = AuditEntry::find()->all();
 
+        if (!$defaultProject = AuditProject::find()->one()) {
+            $defaultProject = new AuditProject([
+                'name' => 'Default Project',
+            ]);
+            $defaultProject->save();
+        }
+
         foreach ($entries as $entry) {
             if (is_null($entry->application_unique_id)) {
                 $entry->application_unique_id = Yii::$app->id;
@@ -25,6 +33,7 @@ class m170731_000005_alter_audit_entry extends Migration
                 /** @var AuditApplication $application */
                 $application = new AuditApplication([
                     'unique_id' => $entry->application_unique_id,
+                    'project_id' => $defaultProject->id,
                 ]);
                 $application->save(false);
             }
