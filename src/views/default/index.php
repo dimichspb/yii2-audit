@@ -20,7 +20,7 @@ $this->registerCss('canvas {width: 100% !important;height: 400px;}');
 
     <div class="row">
         <div class="col-md-12 col-lg-12">
-            <h2><?php echo Html::a(Yii::t('audit', 'Entries'), ['entry/index']); ?></h2>
+            <h2><?php echo Html::a(Yii::t('audit', 'All requests statistics'), ['entry/index']); ?></h2>
 
             <div class="well">
                 <?php
@@ -56,25 +56,6 @@ $this->registerCss('canvas {width: 100% !important;height: 400px;}');
                 ?>
             </div>
         </div>
-
-        <?php
-        foreach (Audit::getInstance()->panels as $panel) {
-            /** @var Panel $panel */
-            $chart = $panel->getChart();
-            if (!$chart) {
-                continue;
-            }
-            $indexUrl = $panel->getIndexUrl();
-            ?>
-            <div class="col-md-3 col-lg-3">
-                <h2><?php echo $indexUrl ? Html::a($panel->getName(), $indexUrl) : $panel->getName(); ?></h2>
-
-                <div class="well">
-                    <?php echo $chart; ?>
-                </div>
-            </div>
-        <?php } ?>
-
     </div>
 
 </div>

@@ -86,6 +86,11 @@ class AuditEntry extends ActiveRecord
         return static::hasMany(AuditMail::className(), ['entry_id' => 'id']);
     }
 
+    public function getApplication()
+    {
+        return $this->hasOne(AuditApplication::className(), ['id' => 'application_id']);
+    }
+
     /**
      * Returns all linked AuditJavascript instances
      * @return ActiveQuery
