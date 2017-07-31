@@ -3,7 +3,7 @@
 use bedezign\yii2\audit\components\Migration;
 use yii\db\Schema;
 
-class m170126_000001_alter_audit_mail extends Migration
+class m170226_000001_alter_audit_entry extends Migration
 {
     const TABLE = '{{%audit_entry}}';
 

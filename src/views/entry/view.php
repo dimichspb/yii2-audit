@@ -33,13 +33,13 @@ $this->params['breadcrumbs'][] = '#' . $model->id;
 
             if ($model->request_method == 'CLI') {
                 $attributes = [
-                    'application',
+                    'application_id',
                     'route',
                     'request_method',
                 ];
             } else {
                 $attributes = [
-                    'application',
+                    'application_id',
                     [
                         'label' => $model->getAttributeLabel('user_id'),
                         'value' => Audit::getInstance()->getUserIdentifier($model->user_id),
